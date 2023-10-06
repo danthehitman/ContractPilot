@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="ContractPilot.View.StatusView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:ContractPilot.View" xmlns:viewmodel="clr-namespace:ContractPilot.ViewModel">
+  <Grid Name="mainGrid">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Label Content="Plane Type:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="72" Height="29" />
+    <Label Name="lblPlaneType" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top" Width="176" Height="29" Content="{Binding PlaneName}" />
+    <Button Margin="10" Width="200" Content="{Binding StartStopLabel}" Command="{Binding StartStopFlightCommand}" />
+    <Button Margin="505,10,207,369" Content="Drop Payload" Command="{Binding DropPayloadCommand}" />
+  </Grid>
+</UserControl>

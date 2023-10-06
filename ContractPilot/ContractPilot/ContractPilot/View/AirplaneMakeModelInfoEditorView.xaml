@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="ContractPilot.View.AirplaneMakeModelInfoEditorView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:ContractPilot.View" xmlns:viewmodel="clr-namespace:ContractPilot.ViewModel" xmlns:model="clr-namespace:CPCommon.Model;assembly=CPCommon" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <Grid>
+    <FrameworkElement.Resources>
+      <ResourceDictionary>
+        <ObjectDataProvider x:Key="EngineTypeData" MethodName="GetValues" xmlns:system="clr-namespace:System;assembly=System.Runtime" ObjectType="{x:Type system:Enum}">
+          <ObjectDataProvider.MethodParameters>
+            <x:TypeExtension TypeName="model:EngineType" />
+          </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+      </ResourceDictionary>
+    </FrameworkElement.Resources>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <StackPanel>
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <Label Name="lblName" Content="Name:" Style="{StaticResource MakeModelInfoInputLabelStyle}" />
+        <TextBox Name="tbNameText" Style="{StaticResource MakeModelInfoInputTextBoxStyle}" Text="{Binding Name}" />
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <Label Name="lblAirplaneTailNumber" Content="Engine Type:" Style="{StaticResource MakeModelInfoInputLabelStyle}" />
+        <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource MakeModelInfoInputComboBoxStyle}" SelectedItem="{Binding EngineType}" ItemsSource="{Binding Source={StaticResource EngineTypeData}}" />
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <Button Width="200" Content="Save" Height="25" Command="{Binding SaveCommand}" />
+      </StackPanel>
+    </StackPanel>
+  </Grid>
+</UserControl>

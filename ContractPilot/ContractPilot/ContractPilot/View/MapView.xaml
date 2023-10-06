@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="ContractPilot.View.MapView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:map="clr-namespace:MapControl;assembly=MapControl.WPF" xmlns:viewmodel="clr-namespace:ContractPilot.ViewModel" xmlns:view="clr-namespace:ContractPilot.View">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <DataTemplate x:Key="PolylineItemTemplate">
+        <map:MapPolyline Shape.Stroke="#FFFF0000" Shape.StrokeThickness="3" map:MapPolyline.Locations="{Binding Locations}" />
+      </DataTemplate>
+      <Style x:Key="PointStyleWithEvent" BasedOn="{StaticResource PointItemStyle}" TargetType="{x:Type map:MapItem}">
+        <EventSetter Event="MouseDoubleClick" Handler="MapItemTouchDown" />
+      </Style>
+      <Style x:Key="PolylineItemStyle" TargetType="{x:Type map:MapItem}">
+        <Setter Property="Control.Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type map:MapItem}">
+              <map:MapPolyline Shape.Stroke="#FFFF0000" Shape.StrokeThickness="3" map:MapPolyline.Locations="{Binding Locations}" />
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+      <Style x:Key="PushpinItemStyle" TargetType="{x:Type map:MapItem}">
+        <EventSetter Event="MouseDoubleClick" Handler="MapItemTouchDown" />
+        <Setter Property="map:MapItem.AutoCollapse" Value="True" />
+        <Setter Property="map:MapItem.Location" Value="{Binding Location}" />
+        <Setter Property="FrameworkElement.VerticalAlignment" Value="Bottom" />
+        <Setter Property="Control.Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type map:MapItem}">
+              <map:Pushpin ContentControl.Content="{Binding Name}" />
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+          <Trigger Property="ListBoxItem.IsSelected" Value="True">
+            <Setter Property="Panel.ZIndex" Value="1" />
+            <Setter Property="Control.Foreground" Value="#FFFF4500" />
+          </Trigger>
+        </Style.Triggers>
+      </Style>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+      <map:WebMercatorProjection x:Key="WebMercatorProjection" />
+      <map:WorldMercatorProjection x:Key="WorldMercatorProjection" />
+      <map:EquirectangularProjection x:Key="EquirectangularProjection" />
+      <map:OrthographicProjection x:Key="OrthographicProjection" />
+      <map:GnomonicProjection x:Key="GnomonicProjection" />
+      <map:StereographicProjection x:Key="StereographicProjection" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <map:Map map:Map.Name="map" map:MapBase.ZoomLevel="11" map:MapBase.MaxZoomLevel="21" map:Map.MouseWheelZoomDelta="1" map:MapBase.Center="{Binding MapCenter}" map:MapBase.MapLayer="{Binding MapLayers.CurrentMapLayer}" map:MapBase.MapProjection="{Binding SelectedValue, ElementName=projectionComboBox, FallbackValue={StaticResource WebMercatorProjection}, TargetNullValue={StaticResource WebMercatorProjection}}" MouseLeftButtonDown="MapMouseLeftButtonDown" MouseRightButtonDown="MapMouseRightButtonDown" MouseMove="MapMouseMove" MouseLeave="MapMouseLeave" ManipulationInertiaStarting="MapManipulationInertiaStarting">
+      <Image Source="10_535_330.jpg" Stretch="Fill" map:MapPanel.BoundingBox="53.54031,8.08594,53.74871,8.43750" Opacity="{Binding Value, ElementName=imageOpacitySlider}" />
+      <map:MapGraticule map:MapGraticule.Name="graticule" UIElement.Opacity="0.6" UIElement.Visibility="{Binding IsChecked, ElementName=graticuleCheckBox, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <!--Unknown connection ID: 4-->
+      </map:MapGraticule>
+      <map:MapScale FrameworkElement.HorizontalAlignment="Left" FrameworkElement.VerticalAlignment="Bottom" />
+      <map:MapItemsControl ItemsControl.ItemTemplate="{StaticResource PolylineItemTemplate}" ItemsControl.ItemsSource="{Binding Polylines}" />
+      <map:MapItemsControl ItemsControl.ItemContainerStyle="{StaticResource BreadcrumbPointStyle}" ItemsControl.ItemsSource="{Binding BreadCrumbs}" />
+      <map:MapItemsControl ItemsControl.ItemContainerStyle="{StaticResource PointStyleWithEvent}" ListBox.SelectionMode="Extended" ItemsControl.ItemsSource="{Binding Points}" />
+      <map:MapItemsControl ItemsControl.ItemContainerStyle="{StaticResource PushpinItemStyle}" ItemsControl.ItemsSource="{Binding Pushpins}" />
+      <map:Pushpin map:MapContentControl.AutoCollapse="True" map:MapContentControl.Location="65,-18" ContentControl.Content="Iceland" />
+      <map:Pushpin map:MapContentControl.AutoCollapse="True" map:MapContentControl.Location="71,25" ContentControl.Content="Norway" />
+      <map:Pushpin map:MapContentControl.AutoCollapse="True" map:MapContentControl.Location="35,33" ContentControl.Content="Cyprus" />
+      <map:Pushpin map:MapContentControl.AutoCollapse="True" map:MapContentControl.Location="28.25,-16.5" ContentControl.Content="Tenerife" />
+      <map:MapPath map:MapPath.Location="53.5,8.2" Shape.Stroke="#FF0000FF" Shape.StrokeThickness="3" Shape.Fill="#1F007F00">
+        <map:MapPath.Data>
+          <EllipseGeometry RadiusX="1852" RadiusY="1852" />
+        </map:MapPath.Data>
+      </map:MapPath>
+      <map:Pushpin map:MapContentControl.AutoCollapse="True" map:MapContentControl.Location="53.5,8.2" ContentControl.Content="N 53°30' E 8°12'" />
+    </map:Map>
+    <Grid Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <TextBlock Name="Mouns" Margin="5" VerticalAlignment="Bottom" FontFamily="Segoe UI Mono" Text="{Binding MouseCoordinatesText}" />
+      <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Margin="5">
+          <TextBlock Text="Zoom Level" Margin="0,0,0,2" HorizontalAlignment="Center" FontSize="10" />
+          <Slider AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" Width="75" VerticalAlignment="Center" SmallChange="0.01" Minimum="{Binding MinZoomLevel, ElementName=map}" Maximum="{Binding MaxZoomLevel, ElementName=map}" Value="{Binding TargetZoomLevel, ElementName=map}" />
+        </StackPanel>
+        <StackPanel Margin="5">
+          <TextBlock Text="Heading" Margin="0,0,0,2" HorizontalAlignment="Center" FontSize="10" />
+          <Slider AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" Width="75" VerticalAlignment="Center" SmallChange="5" LargeChange="45" Minimum="0" Maximum="360" Value="{Binding TargetHeading, ElementName=map}" />
+        </StackPanel>
+        <StackPanel Margin="5">
+          <TextBlock Text="Image Opacity" Margin="0,0,0,2" HorizontalAlignment="Center" FontSize="10" />
+          <Slider Name="imageOpacitySlider" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="1" Width="75" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="0.5" />
+        </StackPanel>
+        <CheckBox Name="graticuleCheckBox" ToolTip="Graticule Overlay" Margin="8" VerticalAlignment="Bottom" Content="Graticule" />
+        <CheckBox ToolTip="Seamarks Overlay" Margin="8" VerticalAlignment="Bottom" Content="Seamarks" Checked="SeamarksChecked" Unchecked="SeamarksUnchecked" />
+        <ComboBox ToolTip="Map Layer" Width="200" Margin="5" VerticalAlignment="Bottom" ItemsSource="{Binding MapLayers.MapLayerNames}" SelectedItem="{Binding MapLayers.CurrentMapLayerName}" />
+        <ComboBox Name="projectionComboBox" ToolTip="Map Projection" Width="120" Margin="5" VerticalAlignment="Bottom" SelectedValuePath="Tag" SelectedIndex="0">
+          <ComboBoxItem Content="Web Mercator" Tag="{StaticResource WebMercatorProjection}" />
+          <ComboBoxItem Content="World Mercator" Tag="{StaticResource WorldMercatorProjection}" />
+          <ComboBoxItem Content="Equirectangular" Tag="{StaticResource EquirectangularProjection}" />
+          <ComboBoxItem Content="Orthographic" Tag="{StaticResource OrthographicProjection}" />
+          <ComboBoxItem Content="Gnomonic" Tag="{StaticResource GnomonicProjection}" />
+          <ComboBoxItem Content="Stereographic" Tag="{StaticResource StereographicProjection}" />
+        </ComboBox>
+      </StackPanel>
+    </Grid>
+  </Grid>
+</UserControl>

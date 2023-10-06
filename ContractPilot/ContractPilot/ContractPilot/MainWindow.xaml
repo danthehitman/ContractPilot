@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="ContractPilot.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:ContractPilot" xmlns:map="clr-namespace:MapControl;assembly=MapControl.WPF" xmlns:viewmodel="clr-namespace:ContractPilot.ViewModel" Title="ContractPilot" Height="450" Width="800" Background="#FF808080" Loaded="Window_Loaded">
+  <Grid Name="mainGrid">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid Row="0" Height="50" ColumnSpan="2">
+      <StackPanel HorizontalAlignment="Right" Width="170">
+        <Label Content="Connected:" Margin="10,10,0,0" VerticalAlignment="Top" Width="70" Height="29" />
+        <Label Margin="0,10,0,0" VerticalAlignment="Top" Width="50" Height="29" Content="{Binding SimConnected}" />
+      </StackPanel>
+      <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+        <Button Margin="10" Width="200" Content="Map" CommandParameter="Map" Command="{Binding UpdateViewCommand}" />
+        <Button Margin="10" Width="200" Content="Status" CommandParameter="Status" Command="{Binding UpdateViewCommand}" />
+        <Button Margin="10" Width="200" Content="Add Model" CommandParameter="AddAirplaneMakeModelInfo" Command="{Binding UpdateViewCommand}" />
+      </StackPanel>
+    </Grid>
+    <Grid Row="1" ColumnSpan="2">
+      <ContentControl Content="{Binding ActiveViewModel}" />
+    </Grid>
+  </Grid>
+</Window>
