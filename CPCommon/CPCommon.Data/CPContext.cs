@@ -25,9 +25,9 @@ public class CPContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder("Host=localhost;Database=cpdata;Username=postgres;Password=postgres");
-        dataSourceBuilder.UseNetTopologySuite();
-        var dataSource = dataSourceBuilder.Build();
+        //var dataSourceBuilder = new NpgsqlDataSourceBuilder("Host=localhost;Database=cpdata;Username=postgres;Password=postgres");
+        //dataSourceBuilder.UseNetTopologySuite();
+        //var dataSource = dataSourceBuilder.Build();
 
         optionsBuilder.UseNpgsql("Host=localhost;Database=cpdata;Username=postgres;Password=postgres", delegate (NpgsqlDbContextOptionsBuilder o)
         {

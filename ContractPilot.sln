@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lnm2CpLoader", "Lnm2CpLoade
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CPCommon", "CPCommon\CPCommon.csproj", "{C207186B-6247-413C-96AE-423E00F90AE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractPilot", "ContractPilot\ContractPilot.csproj", "{B5C572A0-D3B3-46E7-9FC4-BB2565F417C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContractPilot", "ContractPilot\ContractPilot.csproj", "{B5C572A0-D3B3-46E7-9FC4-BB2565F417C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
