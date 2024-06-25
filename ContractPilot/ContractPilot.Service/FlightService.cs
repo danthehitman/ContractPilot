@@ -154,7 +154,7 @@ public class FlightService
     private async Task LogAirportAndParking()
     {
         Point planeLocation = new Point(new Coordinate(_simConnectService.PlaneLocation.PLANE_LONGITUDE, _simConnectService.PlaneLocation.PLANE_LATITUDE));
-        Airport startAirport = await EntityFrameworkQueryableExtensions.FirstOrDefaultAsync<Airport>(((IQueryable<Airport>)_db.Airports).Where((Expression<Func<Airport, bool>>)((Airport p) => ((Geometry)p.Location).IsWithinDistance((Geometry)(object)planeLocation, 0.005))), default(CancellationToken));
+        Airport startAirport = await EntityFrameworkQueryableExtensions.FirstOrDefaultAsync(_db.Airports.Where((Expression<Func<Airport, bool>>)((Airport p) => p.Location.IsWithinDistance((Geometry)(object)planeLocation, 0.005))), default);
         CurrentAirport = startAirport;
         CurrentParking = null;
         if (startAirport != null)

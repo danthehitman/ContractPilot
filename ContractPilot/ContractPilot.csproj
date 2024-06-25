@@ -29,4 +29,13 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="resources\simvariables.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SimConnect.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

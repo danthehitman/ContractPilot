@@ -1,6 +1,6 @@
 namespace ContractPilot.Service.Model;
 
-public struct DoubleProp
+public struct DualProp
 {
 	public double value;
 }
